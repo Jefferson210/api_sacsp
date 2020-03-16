@@ -16,33 +16,43 @@ class EventosController extends BaseController{
                 ->whereIn('EST_TB_EVE',['ESTA0001','ESTA0002'])                    
                 ->get();                   
         if(count($data) > 0)
-        {
-            return response($data);            
+        {              
+            return $this->responseJson(true,$data);
         }
-        else{
-            return response('No se ha encontrado horarios para la fecha seleccionada');
+        else{            
+            return $this->responseJson(false,'No se ha encontrado horarios para la fecha seleccionada');
         }
        
     }
 
-    public function reservar_evento($parm_id_evento){
+    public function reservar_evento($parm_id_evento, $parm_cliente){        
         $data = EventosModel::where('ID_TB_EVE',$parm_id_evento)->first();
-        $data->timestamps = false;
-        if($data->EST_TB_EVE == 'ESTA0001')
+        if($data != null)
         {
-            $data->EST_TB_EVE = 'ESTA0002';
-            $data->ID_TB_CLI  = 'BEAUY APP';
-            $data->TIT_TB_EVE  = 'BEAUY APP';              
-            $data->save();
-            return response('Evento reservado con exito');
-        }
-        else
-        {
-            return response('El evento no se encuentra disponible');
-        }       
+            $data->timestamps = false;
+            if($data->EST_TB_EVE == 'ESTA0001')
+            {
+                $data->EST_TB_EVE = 'ESTA0002';
+                $data->ID_TB_CLI  = $parm_cliente;
+                $data->TIT_TB_EVE  = $parm_cliente;              
+                $data->save();                
+                return $this->responseJson(true,'Evento reservado con exito');
+            }
+            else
+            {                
+                return $this->responseJson(false,'El evento no se encuentra disponible');
+            } 
+        }   
+        else{
+            return $this->responseJson(false,'El evento no existe');
+        }   
     }
 
-    public function show($id){
+    public function responseJson($result, $msg)
+    {
+        return response()->json(['result'=>$result,'msg'=>$msg]);
+    }
+    /*public function show($id){
         $data = EventosModel::where('ID_TB_EVE', $id)->get();
 
         if(count($data) > 0){
@@ -109,5 +119,5 @@ class EventosController extends BaseController{
         $data->delete();
 
         return response('Successful delete');
-    }
+    }*/
 }

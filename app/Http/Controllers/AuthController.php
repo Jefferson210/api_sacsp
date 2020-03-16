@@ -44,7 +44,7 @@ class AuthController extends Controller
             return response()->json(['token_absent' => $e->getMessage()], 500);
 
         }
-
-        return response()->json(compact('token'));
+        // return response()->json(compact('token'));        
+        return $this->respondWithToken($token);
     }
 }

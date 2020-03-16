@@ -11,13 +11,14 @@
 |
 */
 
-// $app->get('/', function () use ($app) {
-//     return $app->version();    
-// });
+$app->get('/', function () use ($app) {
+    // return $app->version();  
+    echo 'API SACSP_V1'  ;
+});
 
-$app->post('/api/login', 'AuthController@postLogin');
+$app->post('/api_sacsp/login', 'AuthController@postLogin');
 
 $app->group(['middleware'=>'auth'], function($app){
-    $app->get('/api/eventos_sala/{parm_sala}/{parm_fecha}', 'EventosController@eventos_sala');
-    $app->put('/api/reservar_evento/{parm_id_evento}', 'EventosController@reservar_evento');     
+    // $app->get('/api_sacsp/eventos_sala/{parm_sala}/{parm_fecha}', 'EventosController@eventos_sala');
+    $app->put('/api_sacsp/reservar_evento/{parm_id_evento}/{parm_cliente}', 'EventosController@reservar_evento');     
 });
