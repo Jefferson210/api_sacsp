@@ -16,9 +16,9 @@ $app->get('/', function () use ($app) {
     echo 'API SACSP_V1'  ;
 });
 
-$app->post('/api_sacsp/login', 'AuthController@postLogin');
+$app->post('/login', 'AuthController@postLogin');
 
 $app->group(['middleware'=>'auth'], function($app){
     // $app->get('/api_sacsp/eventos_sala/{parm_sala}/{parm_fecha}', 'EventosController@eventos_sala');
-    $app->put('/api_sacsp/reservar_evento/{parm_id_evento}/{parm_cliente}', 'EventosController@reservar_evento');     
+    $app->put('/reservar_evento', 'EventosController@reservar_evento');     
 });

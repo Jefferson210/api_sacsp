@@ -9,13 +9,11 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     protected function respondWithToken($token)
-    {
-        Auth::factory()->setTTL(57599);
+    {        
         return response()->json([
             'token' => $token,
-            'token_type' => 'bearer',
+            'token_type' => 'bearer',     
             'expires_in' => Auth::factory()->getTTL()
-            //'expires_in' => Auth::factory()->getTTL() * 60
         ], 200);
     }
 }

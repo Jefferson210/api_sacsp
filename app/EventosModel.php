@@ -10,5 +10,5 @@ class EventosModel extends Model{
 
     protected $table = 'TB_EVENTOS';
     public    $primaryKey  = 'ID_TB_EVE';
-
+    public    $timestamps = false;
 }
